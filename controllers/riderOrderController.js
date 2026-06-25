@@ -986,6 +986,32 @@ const pickupOrder = async (req, res) => {
 
     await order.save();
 
+
+    // ==========================================
+// UPDATE ORIGINAL ORDER
+// ==========================================
+
+switch (order.type) {
+
+ case "pharmacy":
+  await axios.put(
+    `https://sandeeplabmanagement.onrender.com/api/pharmacy-orders/rider-pickup/${order.orderId}`
+  );
+  break;
+
+case "pet":
+  await axios.put(
+    `https://sandeeplabmanagement.onrender.com/api/management-pet-orders/rider-pickup/${order.orderId}`
+  );
+  break;
+
+case "lab":
+  await axios.put(
+    `https://sandeeplabmanagement.onrender.com/api/booking-lab/rider-pickup/${order.orderId}`
+  );
+  break;
+
+}
     return res.status(200).json({
       success: true,
       message: "Pickup completed",
@@ -1048,6 +1074,28 @@ const deliveredOrder = async (req, res) => {
     order.status = "delivered";
 
     await order.save();
+
+    switch (order.type) {
+
+ case "pharmacy":
+  await axios.put(
+    `https://sandeeplabmanagement.onrender.com/api/pharmacy-orders/rider-delivered/${order.orderId}`
+  );
+  break;
+
+case "pet":
+  await axios.put(
+    `https://sandeeplabmanagement.onrender.com/api/management-pet-orders/rider-delivered/${order.orderId}`
+  );
+  break;
+
+case "lab":
+  await axios.put(
+    `https://sandeeplabmanagement.onrender.com/api/booking-lab/rider-delivered/${order.orderId}`
+  );
+  break;
+
+}
 
     return res.status(200).json({
       success: true,
